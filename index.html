@@ -10,25 +10,13 @@
   <h1>囚人のジレンマ</h1>
 
   <div id="game">
-    <div class="players">
-      <div class="player">
-        <h2>プレイヤー1</h2>
-        <input id="p1-coop" type="radio" name="p1-choice" value="collaborate">
-        <label for="p1-coop">協力</label><br>
-        <input id="p1-betray" type="radio" name="p1-choice" value="betray">
-        <label for="p1-betray">裏切る</label>
-      </div>
+    <h2>プレイヤー1</h2>
+    <button id="p1-coop">協力</button>
+    <button id="p1-betray">裏切る</button>
 
-      <div class="player">
-        <h2>プレイヤー2</h2>
-        <input id="p2-coop" type="radio" name="p2-choice" value="collaborate">
-        <label for="p2-coop">協力</label><br>
-        <input id="p2-betray" type="radio" name="p2-choice" value="betray">
-        <label for="p2-betray">裏切る</label>
-      </div>
-    </div>
-
-    <button id="confirm">確定</button>
+    <h2>プレイヤー2</h2>
+    <button id="p2-coop">協力</button>
+    <button id="p2-betray">裏切る</button>
 
     <h3>結果</h3>
     <div id="result">対戦結果</div>
@@ -40,7 +28,6 @@
     <p>ラウンド: <span id="round">1</span>/10</p>
 
     <button id="next-round">次のラウンド</button>
-
     <div id="game-over" class="hidden">
       <h2>ゲームオーバー</h2>
       <p>最終スコア</p>
