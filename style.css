@@ -18,6 +18,18 @@ h1 {
   text-align: center;
 }
 
+.players {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.player {
+  padding: 20px;
+  border-radius: 12px;
+  background: #90caf9;
+}
+
 button {
   font-size: 16px;
   padding: 12px 24px;
@@ -41,4 +53,8 @@ button:hover {
 
 h4 {
   margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
 }
