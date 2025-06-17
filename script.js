@@ -3,29 +3,31 @@ let p2Score = 0;
 
 let p1Choice = '';
 let p2Choice = '';
-let choicesMade = 0;
+let round = 1;
 
 const p1ScoreEl = document.getElementById('p1-score');
 const p2ScoreEl = document.getElementById('p2-score');
+const p1FinalScore = document.getElementById('p1-final-score');
+const p2FinalScore = document.getElementById('p2-final-score');
 const resultEl = document.getElementById('result');
-const p1CoopBtn = document.getElementById('p1-coop');
-const p1BetrayBtn = document.getElementById('p1-betray');
-const p2CoopBtn = document.getElementById('p2-coop');
-const p2BetrayBtn = document.getElementById('p2-betray');
+const p1RadioButtons = document.querySelectorAll('input[name=p1-choice]');
+const p2RadioButtons = document.querySelectorAll('input[name=p2-choice]');
+const confirmBtn = document.getElementById('confirm');
 const nextRoundBtn = document.getElementById('next-round');
+const restartBtn = document.getElementById('restart');
+const gameOver = document.getElementById('game-over');
+const roundEl = document.getElementById('round');
 
 function resetRound(){
   p1Choice = '';
   p2Choice = '';
-  choicesMade = 0;
-
-  p1CoopBtn.disabled = false;
-  p1BetrayBtn.disabled = false;
-  p2CoopBtn.disabled = false;
-  p2BetrayBtn.disabled = false;
+  
+  p1RadioButtons.forEach(radio => radio.checked = false);
+  p2RadioButtons.forEach(radio => radio.checked = false);
 
   resultEl.textContent = "対戦結果";
 
+  confirmBtn.disabled = false;
 }
 
 function resolveRound(){
@@ -42,7 +44,7 @@ function resolveRound(){
               p2Choice === 'betray') {
     p1Score += 0;
     p2Score += 3;
-    resultEl.textContent = "プレイヤー1裏切られた (+0), プレイヤー2裏切って (+3)";
+    resultEl.textContent = "プレイヤー1裏切られて (+0), プレイヤー2裏切って (+3)";
 
   } else if (p1Choice === 'betray' &&
               p2Choice === 'collaborate') {
@@ -61,48 +63,66 @@ function resolveRound(){
   p1ScoreEl.textContent = p1Score;
   p2ScoreEl.textContent = p2Score;
 
+  if (round < 10) {
+    round++;
+    roundEl.textContent = round;
+  } else {
+    gameOver.classList.remove('hidden');
+    p1FinalScore.textContent = p1Score;
+    p2FinalScore.textContent = p2Score;
+
+    p1RadioButtons.forEach(radio => radio.disabled = true);
+    p2RadioButtons.forEach(radio => radio.disabled = true);
+    confirmBtn.disabled = true;
+    nextRoundBtn.disabled = true;
+
+    resultEl.textContent += " ゲームオーバー";
+
+  }
 }
 
-p1CoopBtn.addEventListener('click',(e)=>{
-  p1Choice = 'collaborate';
-  p1CoopBtn.disabled = true;
-  p1BetrayBtn.disabled = true;
+confirmBtn.addEventListener('click',(e)=>{
+  p1RadioButtons.forEach(radio => {
+    if(radio.checked) p1Choice = radio.value;
+  });
+  p2RadioButtons.forEach(radio => {
+    if(radio.checked) p2Choice = radio.value;
+  });
 
-  choicesMade++;
-  if (choicesMade===2) resolveRound();
-
-});
-p1BetrayBtn.addEventListener('click',(e)=>{
-  p1Choice = 'betray';
-  p1BetrayBtn.disabled = true;
-  p1CoopBtn.disabled = true;
-
-  choicesMade++;
-  if (choicesMade===2) resolveRound();
-
-});
-
-//プレイヤー2も同様に...
-p2CoopBtn.addEventListener('click',(e)=>{
-  p2Choice = 'collaborate';
-  p2CoopBtn.disabled = true;
-  p2BetrayBtn.disabled = true;
-
-  choicesMade++;
-  if (choicesMade===2) resolveRound();
-
-});
-p2BetrayBtn.addEventListener('click',(e)=>{
-  p2Choice = 'betray';
-  p2BetrayBtn.disabled = true;
-  p2CoopBtn.disabled = true;
-
-  choicesMade++;
-  if (choicesMade===2) resolveRound();
-
+  if (p1Choice && p2Choice) {
+    resolveRound();
+    confirmBtn.disabled = true;
+  } else {
+    alert("プレイヤー1もプレイヤー2も必須です！");
+  }
 });
 
 // 次のラウンド
 nextRoundBtn.addEventListener('click',(e)=>{
+  if (round <= 10) {
+    resetRound();
+  }
+});
+
+// ゲーム最初から
+restartBtn.addEventListener('click',(e)=>{
+  p1Score = 0;
+  p2Score = 0;
+  round = 1;
+
+  p1ScoreEl.textContent = p1Score;
+  p2ScoreEl.textContent = p2Score;
+  p1FinalScore.textContent = p1Score;
+  p2FinalScore.textContent = p2Score;
+
+  gameOver.classList.add('hidden'); 
+  p1RadioButtons.forEach(radio => radio.disabled = false);
+  p2RadioButtons.forEach(radio => radio.disabled = false);
+  confirmBtn.disabled = false;
+
   resetRound();
 });
+
+// 初期化
+resetRound();
+
