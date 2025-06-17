@@ -1,0 +1,44 @@
+body {
+  background: #bbdefb;
+  color: #0d47a1;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+#game {
+  background: #e3f2fd;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.2);
+  text-align: center;
+}
+
+button {
+  font-size: 16px;
+  padding: 12px 24px;
+  margin-bottom: 20px;
+  background: #1565c0;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0d47a1;
+}
+
+#result {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+h4 {
+  margin-bottom: 10px;
+}
